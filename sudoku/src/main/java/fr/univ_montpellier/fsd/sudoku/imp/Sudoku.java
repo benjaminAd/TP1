@@ -48,8 +48,9 @@ public class Sudoku {
 	 * 
 	 */
 	public void findSolution() {
-
-		// TODO
+		do {
+			generateSolution();
+		} while(!solutionChecker());
 	}
 
 	public static void main(String args[]) {
