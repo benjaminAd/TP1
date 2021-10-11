@@ -28,16 +28,16 @@ public class Sudoku {
      *
      */
 
-    private boolean solutionChecker() {
-        // TODO
-        return false;
+	private boolean solutionChecker() {
+		// TODO
+		return false;
 
     }
 
-    /*
-     * Generate a random grid solution
-     *
-     */
+	/*
+	 * Generate a random grid solution
+	 * 
+	 */
 
     private void generateSolution() {
         for (int i = 0; i < this.grid.length; i++) {
@@ -47,18 +47,32 @@ public class Sudoku {
         }
     }
 
-    /*
-     * Find a solution to the sudoku problem
-     *
-     */
-    public void findSolution() {
-        do {
-            generateSolution();
-        } while (!solutionChecker());
-    }
+	/*
+	 * Find a solution to the sudoku problem
+	 * 
+	 */
+	public void findSolution() {
+		do {
+			generateSolution();
+		} while(!solutionChecker());
+		printSudoku();
+	}
 
-    public static void main(String args[]) {
-        new Sudoku(4).findSolution();
+	private void printSudoku() {
+		for (int i=0; i < grid.length; i++) {
+			for (int j=0; j < grid[i].length; j++) {
+				System.out.print("c_"+i+"_"+j+" = "+grid[i][j]);
+				if (j == grid[i].length -1) {
+					System.out.print("\n");
+				} else {
+					System.out.print("\t");
+				}
+			}
+		}
+	}
 
-    }
+	public static void main(String args[]) {
+		new Sudoku(4).findSolution();
+
+	}
 }
