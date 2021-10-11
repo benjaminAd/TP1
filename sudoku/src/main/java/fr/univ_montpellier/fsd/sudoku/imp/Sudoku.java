@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Sudoku {
@@ -28,51 +29,61 @@ public class Sudoku {
      *
      */
 
-	private boolean solutionChecker() {
-		// TODO
-		return false;
+    private boolean solutionChecker() {
+        // TODO
+        return false;
 
     }
 
-	/*
-	 * Generate a random grid solution
-	 * 
-	 */
+    /*
+     * Generate a random grid solution
+     *
+     */
 
     private void generateSolution() {
-        for (int i = 0; i < this.grid.length; i++) {
+        /*for (int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid[i].length; j++) {
                 this.grid[i][j] = 1 + (int) (Math.random() * (n - 1) + 1);
+            }
+        }*/
+
+        //Version un peu plus opti
+        List<Integer> possible_solution = new ArrayList<>();
+        for (int i = 1; i <= this.n; i++) {
+            possible_solution.add(i);
+        }
+        for (int j = 0; j < this.grid.length; j++) {
+            Collections.shuffle(possible_solution);
+            this.grid[j] = possible_solution.stream().mapToInt(i -> i).toArray();
+        }
+    }
+
+    /*
+     * Find a solution to the sudoku problem
+     *
+     */
+    public void findSolution() {
+        do {
+            generateSolution();
+        } while (!solutionChecker());
+        printSudoku();
+    }
+
+    private void printSudoku() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                System.out.print("c_" + i + "_" + j + " = " + grid[i][j]);
+                if (j == grid[i].length - 1) {
+                    System.out.print("\n");
+                } else {
+                    System.out.print("\t");
+                }
             }
         }
     }
 
-	/*
-	 * Find a solution to the sudoku problem
-	 * 
-	 */
-	public void findSolution() {
-		do {
-			generateSolution();
-		} while(!solutionChecker());
-		printSudoku();
-	}
+    public static void main(String args[]) {
+        new Sudoku(4).findSolution();
 
-	private void printSudoku() {
-		for (int i=0; i < grid.length; i++) {
-			for (int j=0; j < grid[i].length; j++) {
-				System.out.print("c_"+i+"_"+j+" = "+grid[i][j]);
-				if (j == grid[i].length -1) {
-					System.out.print("\n");
-				} else {
-					System.out.print("\t");
-				}
-			}
-		}
-	}
-
-	public static void main(String args[]) {
-		new Sudoku(4).findSolution();
-
-	}
+    }
 }
